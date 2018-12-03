@@ -8,18 +8,24 @@ public class Ambiente {
 
     private static List<Integer> numerosAleatorios = new ArrayList<>();
 
+    public static List<Cliente> clientesRetornados = new ArrayList<>();
+    public static Boolean isFilaCheia = false;
+
     public static void adicionaNaFila(List<Cliente> clientes, int horaEntrada){
-        if(numClientesNaoAtendidos(clientes) >= Impressora.TAMANHO_FILA){
+        if(numClientesNaoAtendidos(clientes) >= Impressora.tamanhoFila){
             System.out.println("Fila cheia");
+            clientesRetornados.add(new Cliente(horaEntrada));
+            isFilaCheia = true;
             return;
         }
+        isFilaCheia = false;
         clientes.add(new Cliente(horaEntrada));
     }
 
-    private static int numClientesNaoAtendidos(List<Cliente> clientes){
+    public static int numClientesNaoAtendidos(List<Cliente> clientes){
         int retorno = 0;
         for(Cliente c : clientes){
-            if(c.getSaidaFila() != 0){
+            if(c.getSaidaFila() == 0){
                 retorno++;
             }
         }
@@ -40,5 +46,9 @@ public class Ambiente {
 
     private static int metodoCongruenteLinear(int m, int a, int c, int seed){
         return ((a * seed) + c) % m;
+    }
+
+    public static void setTamanhoFila(int tamanho){
+        Impressora.tamanhoFila = tamanho;
     }
 }
