@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Ambiente {
 
-    private static List<Integer> numerosAleatorios = new ArrayList<>();
+    private static List<Double> numerosAleatorios = new ArrayList<>();
 
     public static List<Cliente> clientesRetornados = new ArrayList<>();
     public static Boolean isFilaCheia = false;
@@ -14,7 +14,7 @@ public class Ambiente {
     public static void adicionaNaFila(List<Cliente> clientes, int horaEntrada){
         if(numClientesNaoAtendidos(clientes) >= Impressora.tamanhoFila){
             System.out.println("Fila cheia");
-            clientesRetornados.add(new Cliente(horaEntrada));
+            clientesRetornados.add(new Cliente(horaEntrada, 1));
             isFilaCheia = true;
             return;
         }
@@ -32,20 +32,20 @@ public class Ambiente {
         return retorno;
     }
 
-    public static int geraAleatorio(int c){
+    public static Double geraAleatorio(int c){
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Date hora = Calendar.getInstance().getTime(); // Ou qualquer outra forma que tem
         String dataFormatada = sdf.format(hora).substring(2).replace(":", "");
         int m = Integer.parseInt(dataFormatada),
                 a = 16807;
-        int seed = !numerosAleatorios.isEmpty() ? numerosAleatorios.get(numerosAleatorios.size() - 1) : 4;
+        Double seed = !numerosAleatorios.isEmpty() ? numerosAleatorios.get(numerosAleatorios.size() - 1) : 4d;
         seed = metodoCongruenteLinear(m, a, c, seed);
         numerosAleatorios.add(seed);
         return seed;
     }
 
-    private static int metodoCongruenteLinear(int m, int a, int c, int seed){
-        return ((a * seed) + c) % m;
+    private static Double metodoCongruenteLinear(int m, int a, int c, Double seed){
+        return Math.log(((a * seed) + c) % m);
     }
 
     public static void setTamanhoFila(int tamanho){

@@ -5,6 +5,7 @@ public class Cliente {
     private int inicioFila;
     private int saidaFila;
     private int tempoEspera;
+    private int flag;
 
     public Cliente(int inicioFila) {
         this.inicioFila = inicioFila;
@@ -12,10 +13,9 @@ public class Cliente {
         tempoEspera = 0;
     }
 
-    public Cliente(int inicioFila, int saidaFila) {
+    public Cliente(int inicioFila, int flag) {
         this.inicioFila = inicioFila;
-        this.saidaFila = saidaFila;
-        tempoEspera = saidaFila - inicioFila;
+        this.flag = flag;
     }
 
     public int getInicioFila() {
@@ -37,5 +37,13 @@ public class Cliente {
 
     public int getTempoEspera() {
         return tempoEspera;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }
